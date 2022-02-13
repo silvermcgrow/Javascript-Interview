@@ -1,0 +1,110 @@
+
+Solution 1:-
+
+function isPalindrome(str){
+    let rerveseString="";
+    for(let i = str.length - 1; i >= 0 ; i--){
+        rerveseString = rerveseString + str[i];
+    }
+    return rerveseString === str;
+}
+
+function maxPalindromProdOfStr(str){
+    //1. str make in lower case
+    const strLowercase = str.toLowerCase();
+
+    let ans = [];
+    
+    //2. iterate with two loops
+    let m = 0;
+    for(let p=0; p<strLowercase.length; p++){
+        let k =0;
+        for(let i=0; i<strLowercase.length; i++){
+            
+            let possiblePalindromWord = "";
+            
+            //3. inside inner loop make possibles strings and call isPalindrom function
+            for(let j=m; j<=k; j++){
+
+                possiblePalindromWord = possiblePalindromWord + strLowercase[j];
+                
+            }
+
+            k++;
+            // becasue we have to find two max subsequences
+                
+            const flag = isPalindrome(possiblePalindromWord);
+           
+            // if(possiblePalindromWord.length > 3 && flag){
+            //     console.log("isPalindrome => "+possiblePalindromWord +" flag "+flag + " len "+possiblePalindromWord.length);
+            // }
+
+            //4. if string is palindrom the push count in to ans=[];
+            if(flag){
+                ans.push(possiblePalindromWord.length)
+            }
+            
+        }
+        m++;
+    }
+
+    //5. the sort the ans[] array;
+    const result = ans.sort((a,b)=>b-a);
+    //maximum possible score by building exactly 2 palindromic sub-sequences
+    if(result.length > 1){
+       
+        console.log("Max prod "+result[0] * result[1])
+        //6. take ans[0]*ans[1] as result
+        return result[0] * result[1];
+    }else{
+        return -1;
+    }
+}
+
+const st = "abcdefAnnaRacecarMom";//"amar";//
+// console.log(isPalindrome('amar'))
+console.log(maxPalindromProdOfStr(st));
+
+===================== Solution 1 End ========================
+
+
+===================== Solution 2 Start ========================
+
+Solution 2:-
+
+
+function encryptText(text,row,col){
+    const ans = [];//[[h,a,v,e],[a,n,i,c],[e,d,a,y]]
+    let p = 0;
+    for(let i=0; i<row; i++){
+        let word = "";
+        while(p<col){ 
+            word = word + text[p];
+            p++;
+        }
+        col = col + 4;
+        ans.push(word.split(''));
+    }
+
+    let c = 0;
+    // col = col;
+    // console.log("row col ",row,row+1)
+    for(let i=0; i<row+1; i++){
+
+        let w = "";
+        if(c < row + 1){
+            for(let j=0; j<row; j++){
+                w = w + ans[j][c];
+            }
+            c++;
+            console.log(w);
+        }
+    }
+}
+
+const t = "haveaniceday"; //12
+const sqrtTN = Math.floor(Math.sqrt(t.length)); //3
+console.log(sqrtTN);
+const row = sqrtTN;
+const col = sqrtTN + 1;
+encryptText(t, row, col);
